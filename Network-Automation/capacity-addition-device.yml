@@ -1,0 +1,34 @@
+### This Ansible playbook is developed by: ###
+### S. Kishore Kumar                       ###
+### ID: 202018bt019                        ###
+### for Network Automation Project         ###
+
+## This playbook configured the rendered configuration for the capacity addition automation ###
+
+
+---
+- name: Configure Remote Network Device
+  hosts: your_remote_switch_host
+  gather_facts: no
+  tasks:
+    - name: Load the configuration file
+      set_fact:
+        switch_config: "{{ lookup('file', '/net-auto/capacity-addition-device-config.cfg') }}"
+    
+    - name: Configure the switch
+      network_cli:
+        host: "{{ inventory_hostname }}"
+        username: your_username
+        password: "{{ lookup('password', 'your_password_secret' }}"
+        transport: ssh
+        config_commands:
+          - "{{ switch_config }}"
+      register: config_result
+
+    - name: Display the configuration result
+      debug:
+        var: config_result
+
+
+
+

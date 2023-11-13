@@ -1,0 +1,25 @@
+### This template is developed by:      ###
+### S. Kishore Kumar                    ###
+### ID: 202018bt019                     ###
+### for Network Automation Project      ###
+
+## This template stores parameters for the predictive maintenance automation task###
+
+! Firmware Upgrade Configuration
+
+firmware upgrade file {{ bin_file }}
+# This store the bin file of the network device 
+
+source {{ '/skishore/net-auto' }}/{{ bin_file }}
+#source location to pick the bin file from, here we stored in net-auto
+!
+
+destination {{ bootflash: }}/{{ bin_file }}
+#destination location to store the bin file on network device 
+
+md5 {{ md5_checksum_file }}
+# checksum value of the bin file to check after copy
+
+md5 {{ md5_checksum_file }}
+
+!

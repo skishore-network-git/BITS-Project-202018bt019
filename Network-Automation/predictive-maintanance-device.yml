@@ -1,0 +1,23 @@
+### This Ansible playbook is developed by: ###
+### S. Kishore Kumar                       ###
+### ID: 202018bt019                        ###
+### for Network Automation Project         ###
+
+## This playbook configured the rendered configuration for the capacity addition automation ###
+
+---
+- name: Manage/Upgrade Remote Device
+  hosts: 192.168.1.155
+  gather_facts: no
+  tasks:
+    - name: Copy Configuration File to Remote Device
+      copy:
+        src: pred-maint-device-upgrade-config.cfg  # Path to the generated configuration file
+        dest: /net-auto.pred-maint-device-upgrade-config
+      when: inventory_hostname == '192.168.1.155'
+
+    - name: Apply Configuration on Remote Device
+      command: ssh skishore@{{ inventory_hostname }} "configure terminal < /net-auto.pred-maint-device-upgrade-config.cfg"
+      when: inventory_hostname == '192.168.1.155'
+
+

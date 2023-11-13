@@ -1,0 +1,23 @@
+### This Ansible playbook is developed by: ###
+### S. Kishore Kumar                       ###
+### ID: 202018bt019                        ###
+### for Network Automation Project         ###
+
+## This playbook configured the rendered configuration for the capacity addition automation ###
+
+
+---
+- name: Push Configuration to Remote Devices
+  hosts: 192.168.1.221
+  gather_facts: no
+  tasks:
+    - name: Copy Configuration File
+      copy:
+        src: 'net-opti-config.cfg'  # Path to the generated configuration file
+        dest: '/home/skishore/net-auto/net-opti-config.cfg'
+        mode: '0644'
+      when: inventory_hostname == '192.168.1.221'
+
+    - name: Apply Configuration
+      command: ssh skishore@{{ inventory_hostname }} "configure terminal < /home/skishore/net-auto/net-opti-config.cfg"
+      when: inventory_hostname == '192.168.1.221'

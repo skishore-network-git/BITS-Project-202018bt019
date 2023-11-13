@@ -1,0 +1,27 @@
+### This Ansible playbook is developed by: ###
+### S. Kishore Kumar                       ###
+### ID: 202018bt019                        ###
+### for Network Automation Project         ###
+
+## This playbook configured the rendered configuration for the Nework optimisation automation ###
+
+! Network Configuration Template
+
+! QoS Configuration
+class-map match-any {{ qos_class_DB_replication }}
+  match access-group {{ qos_access_DBR }}
+  match ip dscp {{ qos_dscp_2 }}
+!
+policy-map {{ qos_dbr }}
+  class {{ qos_db_replication }}
+    set ip dscp {{ qos_new_dscp_value }}
+!
+interface {{ interface_name }}
+  service-policy output {{ qos_dbr }}
+!
+
+! Route Adjustment Configuration
+router {{ routing_protocol }}
+  network {{ 192.168.1.240 }} {{ 255.255.255.248 }}
+  neighbor {{ 192.168.1.145 }} remote-as {{ 14311 }}
+!
